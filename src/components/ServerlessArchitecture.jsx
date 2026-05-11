@@ -16,7 +16,7 @@ function ServerlessArchitecture() {
       summary: "Built a serverless REST API to create, retrieve, and delete tasks using AWS services.",
       techStack: ["AWS Lambda (Python)", "Amazon API Gateway", "Amazon DynamoDB", "AWS CloudWatch"],
       outcome: "Delivered a scalable backend system with zero server management and minimal cost.",
-      demoLink: "https://github.com",
+      demoLink: "https://github.com/tracilvrd/serverless-task-api",
     },
     {
       id: 3,
