@@ -9,9 +9,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -35,4 +32,4 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Deploy to S3
-        run: aws s3 sync dist/ s3://${{ secrets.S3_BUCKET_NAME }} --delete
+        run: aws s3 sync dist s3://${{ secrets.S3_BUCKET_NAME }} --delete
