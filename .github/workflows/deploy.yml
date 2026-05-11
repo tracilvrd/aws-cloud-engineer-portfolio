@@ -11,7 +11,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: aws-cloud-engineer-portfolio
+        working-directory:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
