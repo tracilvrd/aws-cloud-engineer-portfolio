@@ -1,57 +1,102 @@
 # AWS Cloud Engineer Portfolio
 
-Static portfolio site built with React + Vite for cloud engineering roles.
+A production-style cloud-hosted portfolio demonstrating **frontend engineering + AWS static hosting + CI/CD automation using GitHub Actions**.
 
-## Edit Content Quickly
+This project simulates a real-world deployment pipeline used in modern cloud engineering environments.
 
-Update only these data files (no component edits required):
+---
 
-- `src/data/profile.js` for Hero/About
-- `src/data/certifications.js` for Certifications
-- `src/data/serverlessArchitectureSuite.js` for the Projects / featured case study
+## 🧠 System Overview
 
-## Contact Form (Formspree)
+This portfolio is designed as a **fully automated static hosting pipeline**:
 
-1. Create a Formspree form at [https://formspree.io](https://formspree.io).
-2. Copy your endpoint (example: `https://formspree.io/f/abcxyzpq`).
-3. Replace `FORMSPREE_ENDPOINT` in `src/components/ContactForm.jsx`.
+- React + Vite frontend application
+- AWS S3 static website hosting
+- GitHub Actions CI/CD pipeline
+- IAM-based secure deployment
 
-## Local Development
+---
 
-```bash
+## 🏗️ Architecture
+
+```mermaid id="kq2v1p"
+flowchart LR
+A[Developer Push] --> B[GitHub Repository]
+B --> C[GitHub Actions CI/CD]
+C --> D[Build React App (Vite)]
+D --> E[Generate dist/]
+E --> F[Deploy to AWS S3]
+F --> G[S3 Static Website Hosting]
+
+## Project Structure
+aws-cloud-engineer-portfolio/
+├── dist/            # Production build output (generated)
+├── src/             # React application source code
+├── public/          # Static assets
+├── package.json
+├── vite.config.js
+└── .github/workflows/deploy.yml
+
+## CI/CD Pipeline (GitHub Actions)
+On every push to main, the pipeline:
+
+1. Checks out repository
+2. Installs dependencies
+3. Builds production bundle using Vite
+4. Syncs dist/ to S3 bucket
+5. Deletes outdated files for consistency
+
+This ensures zero-manual deployment workflow.
+
+## AWS Infrastructure
+S3 Configuration
+* Static website hosting enabled
+* index.html as entry point
+* error.html fallback for SPA routing
+
+IAM Permissions
+Deployment user requires:
+ - s3:PutObject
+ - s3:DeleteObject
+ - s3:ListBucket
+
+🚀 Deployment Flow
+Git Push → GitHub Actions → Build (Vite) → dist/ → S3 Sync → Live Website
+
+💻 Local Development
 npm install
 npm run dev
-```
 
-## Production Build
+App runs locally at:
+http://localhost:5173
 
-```bash
+📦 Production Build
 npm run build
-```
 
-Build output is generated in `dist/`.
+Output:
+dist/
 
-## Deploy to Amazon S3
+☁️ Manual Deployment (Optional)
+aws s3 sync dist s3://YOUR_BUCKET_NAME --delete
 
-### 1) Create and configure bucket
 
-- Create an S3 bucket (example: `my-cloud-portfolio-site`).
-- Enable **Static website hosting**.
-- Set `index document` to `index.html`.
-- Set `error document` to `index.html` (useful for SPA routes).
+🔐 GitHub Secrets Required
+Add the following in repository settings:
+* AWS_ACCESS_KEY_ID
+* AWS_SECRET_ACCESS_KEY
+* AWS_REGION
+* S3_BUCKET_NAME
 
-### 2) Upload build artifacts
+🌐 Production Enhancements (Optional Upgrades)
+* CloudFront CDN (global caching + HTTPS)
+* Route 53 custom domain
+* Cache invalidation on deploy
+* Versioned deployments for rollback
+* Logging via CloudWatch
 
-```bash
-aws s3 sync dist s3://my-cloud-portfolio-site --delete
-```
-
-### 3) Optional hardening and production setup
-
-- Put CloudFront in front of S3 for HTTPS and better caching.
-- Add a custom domain with Route 53.
-- Restrict bucket access depending on S3 website endpoint vs CloudFront setup.
-
-## Notes on Vite + S3
-
-This project uses `base: "./"` in `vite.config.js` so generated asset URLs are relative and work reliably for static S3 hosting.
+📊 What This Project Demonstrates
+* AWS S3 static hosting architecture
+* CI/CD automation with GitHub Actions
+* Secure IAM-based deployment workflow
+* Frontend build optimization (Vite)
+* Cloud-native deployment thinking
