@@ -8,7 +8,7 @@ function ServerlessArchitecture() {
       summary: "Deployed a static portfolio website on AWS S3 using secure public access configuration.",
       techStack: ["AWS S3", "HTML5 / CSS3", "React+Vite", "AWS IAM"],
       outcome: "Delivered a live cloud-hosted portfolio site accessible via a public endpoint.",
-      demoLink: "https://github.com",
+      demoLink: "https://github.com/tracilvrd/aws-cloud-engineer-portfolio",
     },
     {
       id: 2,
