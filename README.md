@@ -19,7 +19,6 @@ This portfolio is designed as a **fully automated static hosting pipeline**:
 
 ## 🏗️ Architecture
 
-```mermaid
 flowchart LR
 A[Developer Push] --> B[GitHub Repository]
 B --> C[GitHub Actions CI/CD]
