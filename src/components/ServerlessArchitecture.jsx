@@ -21,10 +21,10 @@ function ServerlessArchitecture() {
     {
       id: 3,
       title: "Automated CI/CD Pipeline for Serverless Deployment (GitHub Actions + AWS)",
-      summary: "Implemented a CI/CD pipeline to automatically deploy AWS Lambda code from GitHub.",
+      summary: "Implemented a GitHub Actions pipeline to build, test, and deploy a serverless application to AWS automatically.",
       techStack: ["GitHub Actions", "AWS Lambda", "AWS IAM", "AWS CLI"],
       outcome: "Enabled consistent, automated deployments with no manual intervention.",
-      demoLink: "https://github.com",
+      demoLink: "https://github.com/tracilvrd/aws-cloud-engineer-portfolio",
     },
     {
       id: 4,
