@@ -27,15 +27,6 @@ D --> E[Generate dist/]
 E --> F[Deploy to AWS S3]
 F --> G[S3 Static Website Hosting]
 
-## Project Structure
-aws-cloud-engineer-portfolio/
-├── dist/            # Production build output (generated)
-├── src/             # React application source code
-├── public/          # Static assets
-├── package.json
-├── vite.config.js
-└── .github/workflows/deploy.yml
-
 ## CI/CD Pipeline (GitHub Actions)
 On every push to main, the pipeline:
 
@@ -59,43 +50,47 @@ Deployment user requires:
  - s3:DeleteObject
  - s3:ListBucket
 
-🚀 Deployment Flow
+## Deployment Flow
 Git Push → GitHub Actions → Build (Vite) → dist/ → S3 Sync → Live Website
 
-💻 Local Development
+## Local Development
 npm install
 npm run dev
 
 App runs locally at:
 http://localhost:5173
 
-📦 Production Build
+## Production Build
 npm run build
 
 Output:
 dist/
 
-☁️ Manual Deployment (Optional)
+
+## Manual Deployment (Optional)
 aws s3 sync dist s3://YOUR_BUCKET_NAME --delete
 
 
-🔐 GitHub Secrets Required
+## GitHub Secrets Required
 Add the following in repository settings:
 * AWS_ACCESS_KEY_ID
 * AWS_SECRET_ACCESS_KEY
 * AWS_REGION
 * S3_BUCKET_NAME
 
-🌐 Production Enhancements (Optional Upgrades)
+## Production Enhancements 
 * CloudFront CDN (global caching + HTTPS)
 * Route 53 custom domain
 * Cache invalidation on deploy
 * Versioned deployments for rollback
 * Logging via CloudWatch
 
-📊 What This Project Demonstrates
+## What This Project Demonstrates
 * AWS S3 static hosting architecture
 * CI/CD automation with GitHub Actions
 * Secure IAM-based deployment workflow
 * Frontend build optimization (Vite)
 * Cloud-native deployment thinking
+
+## Author
+Ese Daniel
