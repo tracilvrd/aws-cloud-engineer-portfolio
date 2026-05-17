@@ -12,9 +12,9 @@ function App() {
           <img src={brandIcon} alt="Brand icon" className="brand-icon" />
         </a>
         <div className="nav-links">
-          <a href="#projects">Projects</a>
-          <a href="#certifications">Certifications</a>
-          <a href="#contact">Contact</a>
+          <a href="#projects">ARCHITECTURE SUITE</a>
+          <a href="#certifications">CERTIFICATIONS</a>
+          <a href="#contact">CONTACT</a>
         </div>
       </nav>
 
