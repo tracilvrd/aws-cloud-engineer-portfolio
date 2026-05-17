@@ -28,11 +28,11 @@ function ServerlessArchitecture() {
     },
     {
       id: 4,
-      title: "Cloud Monitoring & Alerting System (CloudWatch + SNS)",
-      summary: "Configured monitoring and alerting for a serverless application using AWS CloudWatch and SNS.",
-      techStack: ["AWS CloudWatch", "Amazon SNS", "AWS Lambda"],
-      outcome: "Established real-time error tracking with automated notifications for system issues.",
-      demoLink: "https://github.com",
+      title: "Infrastructure as Code Using Terraform (AWS CLI + Terraform)",
+      summary: "Provisioned and managed AWS infrastructure with Terraform, integrating existing resources into Infrastructure as Code and implementing secure CI/CD with GitHub Actions and AWS OIDC.",
+      techStack: ["Terraform", "AWS CLI", "Amazon S3", "Amazon DynamoDB", "AWS IAM",  "GitHub Actions", "GitHub OIDC"],
+      outcome: "Implemented a production-grade Terraform workflow with remote state management, state locking, and secure GitHub Actions CI/CD using AWS OIDC for reproducible cloud deployments.",
+      demoLink: "https://github.com/tracilvrd/aws-terraform-portfolio-infrastructure",
     },
     {
       id: 5,
