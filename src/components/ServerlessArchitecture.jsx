@@ -46,7 +46,7 @@ function ServerlessArchitecture() {
 
   return (
     <Section id="projects" title="">
-      <p className="eyebrow mb-6">SERVERLESS CLOUD ARCHITECTURE SUITE</p>
+      <p className="eyebrow mb-6">CLOUD ARCHITECTURE SUITE</p>
       <p className="about-text">
         This portfolio represents a unified serverless cloud system designed to demonstrate end-to-end capabilities in modern cloud engineering, including frontend deployment, backend API design, automated delivery pipelines, system observability, and data processing.
 
