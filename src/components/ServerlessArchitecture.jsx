@@ -40,7 +40,7 @@ function ServerlessArchitecture() {
       summary: "Developed an event-driven pipeline to process and query data using AWS serverless services.",
       techStack: ["AWS S3", "AWS Lambda", "Amazon Athena", "AWS Glue Data Catalog"],
       outcome: "Enabled automated data processing and SQL-based analysis without dedicated infrastructure.",
-      demoLink: "https://github.com",
+      demoLink: "https://github.com/tracilvrd/aws-event-driven-data-pipeline",
     },
   ];
 
