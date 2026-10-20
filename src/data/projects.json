@@ -1,0 +1,483 @@
+[
+  {
+    "title": "Kairos ACE Commerce",
+    "kind": "Full-stack",
+    "category": "Full-stack",
+    "summary": "Production-oriented commerce codebase with server-side pricing, Paystack webhook validation and transactional inventory reservations.",
+    "stack": "Next.js, TypeScript, Prisma, Supabase, Paystack",
+    "implementation": "Server-side order pricing rejects invalid product and variant identifiers; webhook uses HMAC-SHA512 signature checking, verifies Paystack transaction details and commits inventory via a database function.",
+    "evidence": "The source includes order and payment-matching tests in tests/orders.test.ts. Inquiry and notification flows were tested during development; this is not a claim about payment settlement or sales volume.",
+    "repoNote": "Private repository: kairosace-ecommerce-application",
+    "files": [
+      "app/api/payments/webhook/route.ts",
+      "lib/orders/pricing.ts",
+      "supabase/migrations/202609300002_stock_reservations.sql",
+      "tests/orders.test.ts",
+      "app/api/orders/route.ts",
+      "lib/payments/payment-match.ts"
+    ],
+    "problem": "Accept customer orders without trusting prices or inventory values supplied by the browser.",
+    "decisions": [
+      "Validate checkout payloads with Zod and require a same-origin request.",
+      "Recalculate prices against the server-side catalog, not the submitted cart.",
+      "Reserve inventory through a PostgreSQL function before returning a payment reference.",
+      "Authenticate Paystack webhooks using HMAC-SHA512 and compare transaction reference, amount, currency and customer details."
+    ],
+    "flow": [
+      "Customer checkout",
+      "Validated orders API",
+      "Trusted catalog pricing",
+      "Pending order + stock reservation",
+      "Paystack payment",
+      "Verified webhook",
+      "Inventory commit + confirmation"
+    ],
+    "proof": "Verified in orders API, pricing utility, SQL reservation function, webhook and Vitest test definitions. Tests were reviewed but not run.",
+    "limitations": "No payment throughput, conversion rate, uptime, or completed production transaction independently verified.",
+    "sourceLinks": [
+      {
+        "label": "View Live Site",
+        "url": "https://kairosace-ecommerce-application.vercel.app/"
+      }
+    ],
+    "challenge": "Accept customer orders without trusting prices or inventory values supplied by the browser.",
+    "goal": "Provide a storefront and checkout workflow that validates orders, derives prices from trusted catalog data, reserves stock, and confirms payments before finalizing inventory.",
+    "architecture": [
+      "Customer checkout",
+      "Validated orders API",
+      "Trusted catalog pricing",
+      "Pending order + stock reservation",
+      "Paystack payment",
+      "Verified webhook",
+      "Inventory commit + confirmation"
+    ],
+    "implementationPoints": [
+      "Validate checkout payloads with Zod and require a same-origin request.",
+      "Recalculate prices against the server-side catalog, not the submitted cart.",
+      "Reserve inventory through a PostgreSQL function before returning a payment reference.",
+      "Authenticate Paystack webhooks using HMAC-SHA512 and compare transaction reference, amount, currency and customer details."
+    ],
+    "techUsed": [
+      "Next.js",
+      "TypeScript",
+      "Prisma",
+      "Supabase",
+      "Paystack"
+    ],
+    "results": "I built the checkout logic around server-side product pricing rather than values supplied by the browser. The order flow checks product and variant IDs, reserves inventory through PostgreSQL, and validates Paystack webhook signatures and transaction details before processing payment confirmation. I also wrote test cases covering order pricing and payment matching.",
+    "candidateLive": "https://kairosace-ecommerce-application.vercel.app/",
+    "screenshots": [
+      {
+        "src": "/evidence/kairos-home.webp",
+        "label": "Desktop homepage"
+      },
+      {
+        "src": "/evidence/kairos-shop.webp",
+        "label": "Product catalogue"
+      },
+      {
+        "src": "/evidence/kairos-product.webp",
+        "label": "Product detail"
+      },
+      {
+        "src": "/evidence/kairos-cart.webp",
+        "label": "Shopping cart"
+      },
+      {
+        "src": "/evidence/kairos-checkout.webp",
+        "label": "Checkout — corrected capture"
+      },
+      {
+        "src": "/evidence/kairos-mobile.webp",
+        "label": "Mobile homepage"
+      }
+    ],
+    "categories": [
+      "Frontend",
+      "Full-stack"
+    ]
+  },
+  {
+    "title": "TRACI Digital Gallery",
+    "kind": "Full-stack",
+    "category": "Full-stack",
+    "summary": "Database-backed digital museum with published collections, archive browsing, editorial content and administrative media workflows.",
+    "stack": "Next.js, TypeScript, PostgreSQL, Supabase",
+    "implementation": "Server-side SQL selects published works and collections; authenticated admin endpoint validates upload MIME type and file size before issuing signed storage upload URLs.",
+    "evidence": "The implementation includes administrative access checks, validated uploads and collector inquiry handling. The gallery screenshots show the published museum and its editorial interfaces.",
+    "repoNote": "Private repository: traci-gallery",
+    "files": [
+      "lib/content/works.ts",
+      "lib/auth/require-admin.ts",
+      "app/api/admin/upload/route.ts",
+      "app/api/collect/inquiries/route.ts",
+      "lib/editorial-workflow.ts"
+    ],
+    "problem": "Manage a growing art, audio and editorial archive with controlled publication and protected media operations.",
+    "decisions": [
+      "Query published works and collections server-side from PostgreSQL.",
+      "Enforce administrative access through authenticated Supabase claims and a configured admin email.",
+      "Validate image MIME types and size before issuing signed Supabase Storage upload URLs.",
+      "Store collector enquiries against published collectible works and send notification separately."
+    ],
+    "flow": [
+      "Museum visitor",
+      "Next.js archive pages",
+      "Server-side published-content queries",
+      "PostgreSQL works + collections",
+      "Admin authentication",
+      "Signed media upload to storage"
+    ],
+    "proof": "Verified in content query, authentication helper, upload route, collector inquiry route and editorial workflow definitions.",
+    "limitations": "No independent performance benchmark, uptime audit or production authorization test performed.",
+    "sourceLinks": [
+      {
+        "label": "View Live Site",
+        "url": "https://traci-gallery.vercel.app/"
+      }
+    ],
+    "challenge": "Manage a growing art, audio and editorial archive with controlled publication and protected media operations.",
+    "goal": "Publish and organize a growing museum archive while supporting editorial workflows, controlled administration, secure media uploads and collector enquiries.",
+    "architecture": [
+      "Museum visitor",
+      "Next.js archive pages",
+      "Server-side published-content queries",
+      "PostgreSQL works + collections",
+      "Admin authentication",
+      "Signed media upload to storage"
+    ],
+    "implementationPoints": [
+      "Query published works and collections server-side from PostgreSQL.",
+      "Enforce administrative access through authenticated Supabase claims and a configured admin email.",
+      "Validate image MIME types and size before issuing signed Supabase Storage upload URLs.",
+      "Store collector enquiries against published collectible works and send notification separately."
+    ],
+    "techUsed": [
+      "Next.js",
+      "TypeScript",
+      "PostgreSQL",
+      "Supabase"
+    ],
+    "results": "I built the museum around published collections and artworks, with server-side content retrieval and protected administrative workflows. Media uploads go through file checks and signed storage URLs, while collector inquiries have their own validation flow. I tested the applicable inquiry and notification workflows as part of development.",
+    "candidateLive": "https://traci-gallery.vercel.app/",
+    "screenshots": [
+      {
+        "src": "/evidence/gallery-home.webp",
+        "label": "Museum homepage"
+      },
+      {
+        "src": "/evidence/gallery-exhibition.webp",
+        "label": "Exhibition introduction"
+      },
+      {
+        "src": "/evidence/gallery-carousel.webp",
+        "label": "Exhibition artwork viewer"
+      },
+      {
+        "src": "/evidence/gallery-artwork.webp",
+        "label": "CREATION OF THE IV — detail"
+      },
+      {
+        "src": "/evidence/gallery-magazine.webp",
+        "label": "V IN MAGAZINE"
+      },
+      {
+        "src": "/evidence/gallery-admin.webp",
+        "label": "Admin CMS"
+      },
+      {
+        "src": "/evidence/gallery-admin-mobile.webp",
+        "label": "Mobile admin CMS"
+      },
+      {
+        "src": "/evidence/gallery-mobile.webp",
+        "label": "Mobile museum homepage — corrected capture"
+      }
+    ],
+    "categories": [
+      "Frontend",
+      "Full-stack"
+    ]
+  },
+  {
+    "title": "AWS Terraform Delivery",
+    "kind": "Cloud & DevOps",
+    "category": "Cloud & DevOps",
+    "summary": "Terraform-managed S3 and DynamoDB resources with a GitHub Actions OIDC-based validation and planning workflow.",
+    "stack": "Terraform, AWS S3, DynamoDB, GitHub Actions, OIDC",
+    "implementation": "Terraform defines state storage, versioning, locking and application resources; workflow requests id-token permission, assumes an AWS role and runs init, validate and plan.",
+    "evidence": "The repository contains the Terraform configuration and a CI workflow for init, validate and plan. The workflow does not automatically apply infrastructure changes.",
+    "repoNote": "Public GitHub repository",
+    "files": [
+      "main.tf",
+      "backend.tf",
+      ".github/workflows/terraform.yml"
+    ],
+    "problem": "Describe AWS resources reproducibly and review infrastructure changes before applying them.",
+    "decisions": [
+      "Define S3 buckets, versioning and DynamoDB tables in Terraform.",
+      "Configure S3 remote state with encryption and a DynamoDB lock table in the checked-in backend configuration.",
+      "Request GitHub Actions OIDC token permission and assume an AWS IAM role.",
+      "Run terraform init, validate and plan on push and pull request."
+    ],
+    "flow": [
+      "Push / pull request",
+      "GitHub Actions",
+      "OIDC role assumption",
+      "Terraform init + validate",
+      "Terraform plan",
+      "AWS resource change proposal"
+    ],
+    "proof": "Verified in main.tf, backend.tf and .github/workflows/terraform.yml.",
+    "limitations": "Workflow contains no terraform apply step. Remote state configuration is visible, but successful workflow execution was not independently verified.",
+    "sourceLinks": [
+      {
+        "label": "View Source Code",
+        "url": "https://github.com/tracilvrd/aws-terraform-portfolio-infrastructure"
+      }
+    ],
+    "challenge": "Describe AWS resources reproducibly and review infrastructure changes before applying them.",
+    "goal": "Describe AWS infrastructure as code and establish a repeatable CI workflow for validation and change planning using short-lived AWS authentication.",
+    "architecture": [
+      "Push / pull request",
+      "GitHub Actions",
+      "OIDC role assumption",
+      "Terraform init + validate",
+      "Terraform plan",
+      "AWS resource change proposal"
+    ],
+    "implementationPoints": [
+      "Define S3 buckets, versioning and DynamoDB tables in Terraform.",
+      "Configure S3 remote state with encryption and a DynamoDB lock table in the checked-in backend configuration.",
+      "Request GitHub Actions OIDC token permission and assume an AWS IAM role.",
+      "Run terraform init, validate and plan on push and pull request."
+    ],
+    "techUsed": [
+      "Terraform",
+      "AWS S3",
+      "DynamoDB",
+      "GitHub Actions",
+      "OIDC"
+    ],
+    "results": "I defined AWS resources with Terraform and set up remote state using S3 and DynamoDB. The GitHub Actions workflow uses OIDC to assume an AWS role and runs Terraform initialization, validation and planning, giving me a repeatable way to review infrastructure changes before applying them.",
+    "categories": [
+      "Cloud & DevOps"
+    ]
+  },
+  {
+    "title": "TRACI Digital Agency",
+    "kind": "Frontend / Full-stack",
+    "category": "Frontend",
+    "summary": "Responsive agency experience with server-side inquiry validation, Supabase persistence and optional Resend notifications.",
+    "stack": "Next.js, TypeScript, Supabase, Resend",
+    "implementation": "Server action validates form inputs and consent, uses a honeypot, stores inquiries server-side, and attempts email notification without losing a saved inquiry if email fails.",
+    "evidence": "The implementation includes the inquiry server action and database persistence. The contact-page capture shows the form, and submission and notification delivery were tested during development.",
+    "repoNote": "Private repository: traci-digital-agency",
+    "files": [
+      "src/app/contact/actions.ts",
+      "supabase/migrations/001_create_agency_inquiries.sql"
+    ],
+    "problem": "Convert inbound project enquiries into stored records without exposing database write access to visitors.",
+    "decisions": [
+      "Validate required form fields and explicit contact consent in a server action.",
+      "Use a honeypot field to suppress basic automated submissions.",
+      "Persist accepted enquiries using server-side Supabase credentials.",
+      "Attempt Resend notification after persistence, so email failure does not erase the enquiry."
+    ],
+    "flow": [
+      "Project enquiry form",
+      "Server action validation",
+      "Supabase REST insert",
+      "Protected agency_inquiries table",
+      "Optional Resend notification"
+    ],
+    "proof": "Verified in src/app/contact/actions.ts and the Supabase inquiry migration.",
+    "limitations": "No production email delivery or lead conversion outcomes independently verified.",
+    "sourceLinks": [],
+    "challenge": "Convert inbound project enquiries into stored records without exposing database write access to visitors.",
+    "goal": "Present agency services and capture project enquiries through a server-validated form with restricted database access and optional email notification.",
+    "architecture": [
+      "Project enquiry form",
+      "Server action validation",
+      "Supabase REST insert",
+      "Protected agency_inquiries table",
+      "Optional Resend notification"
+    ],
+    "implementationPoints": [
+      "Validate required form fields and explicit contact consent in a server action.",
+      "Use a honeypot field to suppress basic automated submissions.",
+      "Persist accepted enquiries using server-side Supabase credentials.",
+      "Attempt Resend notification after persistence, so email failure does not erase the enquiry."
+    ],
+    "techUsed": [
+      "Next.js",
+      "TypeScript",
+      "Supabase",
+      "Resend"
+    ],
+    "results": "I built the project inquiry flow with server-side input validation, consent checks and honeypot protection. Submissions are stored in Supabase, with email notifications handled separately so a notification issue does not discard a saved inquiry. I tested inquiry submission and notification delivery during development.",
+    "categories": [
+      "Frontend",
+      "Full-stack"
+    ],
+    "screenshots": [
+      {
+        "src": "/evidence/agency-home.webp",
+        "label": "Desktop homepage"
+      },
+      {
+        "src": "/evidence/agency-work.webp",
+        "label": "Selected work"
+      },
+      {
+        "src": "/evidence/agency-services.webp",
+        "label": "Services and pricing"
+      },
+      {
+        "src": "/evidence/agency-inquiry.webp",
+        "label": "Project inquiry form"
+      },
+      {
+        "src": "/evidence/agency-mobile.webp",
+        "label": "Mobile homepage"
+      }
+    ]
+  },
+  {
+    "title": "Serverless Task API",
+    "kind": "Cloud / Backend",
+    "category": "Cloud & DevOps",
+    "summary": "Python Lambda handler for creating, listing and deleting tasks in DynamoDB.",
+    "stack": "Python, AWS Lambda, DynamoDB, boto3",
+    "implementation": "Handler generates UUID task identifiers, writes task records, scans to list tasks, and deletes by taskId with missing-ID validation.",
+    "evidence": "The repository contains the Lambda handler, DynamoDB operations and sample request events.",
+    "repoNote": "Public GitHub repository",
+    "files": [
+      "serverless-task-api/backend/lambda/handler.py"
+    ],
+    "problem": "Implement a small serverless task API without managing a traditional application server.",
+    "decisions": [
+      "Use a Python Lambda handler with method dispatch for POST, GET and DELETE.",
+      "Generate UUID task IDs and write records to DynamoDB using boto3.",
+      "Reject DELETE requests missing a taskId.",
+      "Return JSON responses with HTTP-style status codes."
+    ],
+    "flow": [
+      "HTTP event",
+      "Python Lambda handler",
+      "boto3 DynamoDB client",
+      "Tasks table",
+      "JSON response"
+    ],
+    "proof": "Verified in serverless-task-api/backend/lambda/handler.py and sample event files.",
+    "limitations": "GET uses a DynamoDB scan; no pagination or automated tests were verified. API Gateway deployment was not confirmed.",
+    "sourceLinks": [
+      {
+        "label": "View Source Code",
+        "url": "https://github.com/tracilvrd/serverless-task-api"
+      }
+    ],
+    "challenge": "Implement a small serverless task API without managing a traditional application server.",
+    "goal": "Expose basic task creation, listing and deletion through a small Python Lambda handler backed by DynamoDB.",
+    "architecture": [
+      "HTTP event",
+      "Python Lambda handler",
+      "boto3 DynamoDB client",
+      "Tasks table",
+      "JSON response"
+    ],
+    "implementationPoints": [
+      "Use a Python Lambda handler with method dispatch for POST, GET and DELETE.",
+      "Generate UUID task IDs and write records to DynamoDB using boto3.",
+      "Reject DELETE requests missing a taskId.",
+      "Return JSON responses with HTTP-style status codes."
+    ],
+    "techUsed": [
+      "Python",
+      "AWS Lambda",
+      "DynamoDB",
+      "boto3"
+    ],
+    "results": "I built a Python Lambda handler for creating, listing and deleting tasks in DynamoDB using boto3. Each new task gets a UUID, deletion requests check for a task ID, and the handler returns structured JSON responses. I included sample events to make the request formats easy to inspect and test.",
+    "categories": [
+      "Cloud & DevOps"
+    ]
+  },
+  {
+    "title": "Elite Milan Hotel Preview",
+    "kind": "Frontend",
+    "category": "Frontend",
+    "summary": "Static multi-phase hotel guest experience and feedback preview.",
+    "stack": "HTML, CSS, JavaScript, Vercel",
+    "implementation": "Repository includes a main guest-facing page, phase-1 and phase-2 previews, and a feedback page.",
+    "evidence": "Browser captures show the guest website, the two-phase presentation and the sample-data operations dashboard. The dashboard is a prototype, not a live hotel operations system.",
+    "repoNote": "Private repository: elite-milan-preview",
+    "files": [
+      "index.html",
+      "phase-1/index.html",
+      "phase-2/index.html",
+      "feedback/index.html"
+    ],
+    "problem": "Give a prospective hotel client a tangible preview of the guest-facing digital experience before production commitment.",
+    "decisions": [
+      "Organize the preview into a guest-facing landing page and separate phase previews.",
+      "Provide a dedicated feedback route for review.",
+      "Keep booking-system integrations outside the demonstrated scope until verified."
+    ],
+    "flow": [
+      "Guest-facing preview",
+      "Rooms / amenities presentation",
+      "Feedback page",
+      "Client review"
+    ],
+    "proof": "Repository contains index.html, phase-1/index.html, phase-2/index.html and feedback/index.html.",
+    "limitations": "Static preview only; no evidence of completed booking, payment, or room-inventory integration.",
+    "sourceLinks": [],
+    "challenge": "Give a prospective hotel client a tangible preview of the guest-facing digital experience before production commitment.",
+    "goal": "Demonstrate the guest-facing hotel experience and a booking handoff without representing the preview as a live reservation system.",
+    "architecture": [
+      "Guest-facing preview",
+      "Rooms / amenities presentation",
+      "Feedback page",
+      "Client review"
+    ],
+    "implementationPoints": [
+      "Organize the preview into a guest-facing landing page and separate phase previews.",
+      "Provide a dedicated feedback route for review.",
+      "Keep booking-system integrations outside the demonstrated scope until verified."
+    ],
+    "techUsed": [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "Vercel"
+    ],
+    "results": "I built a guest-facing hotel website preview with room categories, hospitality content and an inquiry journey. I also developed a separate operations dashboard prototype showing room readiness, arrivals and housekeeping tasks using sample data. The preview and its feedback workflow were tested during development.",
+    "candidateLive": "https://elite-milan-preview.vercel.app/feedback/",
+    "categories": [
+      "Frontend"
+    ],
+    "screenshots": [
+      {
+        "src": "/evidence/hotel-overview.webp",
+        "label": "Two-phase preview"
+      },
+      {
+        "src": "/evidence/hotel-guest.webp",
+        "label": "Guest website"
+      },
+      {
+        "src": "/evidence/hotel-rooms.webp",
+        "label": "Room categories"
+      },
+      {
+        "src": "/evidence/hotel-operations.webp",
+        "label": "Hotel operations — sample data"
+      },
+      {
+        "src": "/evidence/hotel-mobile.webp",
+        "label": "Mobile preview and feedback"
+      }
+    ]
+  }
+]

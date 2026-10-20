@@ -1,32 +1,3 @@
-import HeroAbout from "./components/HeroAbout";
-import ServerlessArchitecture from "./components/ServerlessArchitecture";
-import Certifications from "./components/Certifications";
-import ContactForm from "./components/ContactForm";
-import brandIcon from "./assets/brand-icon.png";
-
-function App() {
-  return (
-    <div>
-      <nav className="nav container" aria-label="Main navigation">
-        <a href="#" className="brand-link" aria-label="Home">
-          <img src={brandIcon} alt="Brand icon" className="brand-icon" />
-        </a>
-        <div className="nav-links">
-          <a href="#projects">ARCHITECTURE SUITE</a>
-          <a href="#certifications">CERTIFICATIONS</a>
-          <a href="#contact">CONTACT</a>
-        </div>
-      </nav>
-
-      <HeroAbout />
-      <main>
-        <ServerlessArchitecture />
-        <Certifications />
-        <ContactForm />
-      </main>
-
-    </div>
-  );
-}
-
-export default App;
+import React,{useState} from 'react';import projects from './data/projects.json';
+const cats=['All work','Frontend','Full-stack','Cloud & DevOps'];
+export default function App(){const [category,setCategory]=useState('All work');const [selected,setSelected]=useState(null);const shown=projects.filter(p=>category==='All work'||(p.categories??[p.category]).includes(category));return <><header><a className="brand" href="#" onClick={()=>setSelected(null)}>DE. <span>DANIEL O. ESE<small>ENGINEERING WORK</small></span></a><nav><a href="#work" onClick={()=>setSelected(null)}>Work</a><a href="mailto:oghenekparobo.ese@gmail.com">Contact &#8599;</a><a href="https://github.com/tracilvrd" target="_blank" rel="noopener noreferrer">GitHub &#8599;</a></nav></header><main>{selected?<section className="detail"><button className="back" onClick={()=>setSelected(null)}>← Back to selected proof</button><div className="eyebrow">ENGINEERING CASE STUDY / {selected.kind.toUpperCase()}</div><h1>{selected.title}<em>.</em></h1><p className="lede">{selected.summary}</p>{selected.screenshots?.length>0&&<section className="screenshots" aria-label="Authentic browser captures"><div className="eyebrow">VISUAL EVIDENCE / ORIGINAL BROWSER CAPTURES</div><div className="screenshot-grid">{selected.screenshots.map((shot,i)=><a className="screenshot-item" href={shot.src} target="_blank" rel="noopener noreferrer" key={shot.src}><div className="screenshot-frame"><img src={shot.src} alt={`${selected.title}: ${shot.label}`} loading={i===0?"eager":"lazy"}/></div><span>{String(i+1).padStart(2,"0")} / {shot.label} ↗</span></a>)}</div></section>}<div className="case-sections"><article className="case-section"><h2>01 / Challenge</h2><p>{selected.challenge}</p></article><article className="case-section"><h2>02 / Intended goal</h2><p>{selected.goal}</p></article><article className="case-section"><h2>03 / Architectural design</h2><p className="case-context">Architecture and implementation flow based on the project's source code.</p><div className="flow-diagram" aria-label="Architecture and implementation flow">{selected.architecture.map((step,i)=><React.Fragment key={i}><span className="flow-node">{step}</span>{i<selected.architecture.length-1&&<span className="flow-arrow" aria-hidden="true">→</span>}</React.Fragment>)}</div></article><article className="case-section"><h2>04 / Implementation</h2><p>{selected.implementation}</p><ol>{selected.implementationPoints.map((point,i)=><li key={i}>{point}</li>)}</ol></article><article className="case-section"><h2>05 / Technologies used</h2><div className="tags">{selected.techUsed.map(t=><span key={t}>{t}</span>)}</div></article><article className="case-section"><h2>06 / Results & verification</h2><p>{selected.results}</p><p className="case-context">{selected.evidence}</p></article></div>{selected.sourceLinks?.length>0&&<div className="project-links" aria-label="Project external links">{selected.sourceLinks.map((l,i)=><a className="visit" href={l.url} target="_blank" rel="noopener noreferrer" key={i}>{l.label} ↗</a>)}</div>}</section>:<><section className="intro"><div className="eyebrow">● &nbsp; ENGINEERING CAPABILITIES & EVIDENCE</div><h1>What I do<em>.</em></h1><p>Carefully structured digital experiences, supported by reliable software and cloud foundations.</p></section><section className="capabilities">{[['01','Frontend engineering','Responsive interfaces, interaction systems and thoughtful user experiences.','React / Next.js / TypeScript','Frontend'],['02','Full-stack engineering','Applications connecting interfaces, APIs, databases and workflows.','Next.js / Supabase / Prisma','Full-stack'],['03','Cloud & DevOps','Secure infrastructure, deployment automation and resilient systems.','AWS / Terraform / CI/CD','Cloud & DevOps']].map(([n,t,d,s,c])=><button className="cap" key={n} onClick={()=>{setCategory(c);document.getElementById('work')?.scrollIntoView({behavior:'smooth'})}}><span>{n}</span><h2>{t}</h2><p>{d}</p><small>{s}</small><strong>Explore {c.toLowerCase()} work &#8599;</strong></button>)}</section><section className="proof-overview" aria-label="Engineering portfolio at a glance"><div className="proof-overview-heading">ENGINEERING PORTFOLIO / AT A GLANCE</div><div className="proof-overview-grid">{cats.map(c=><button type="button" key={c} className={'proof-overview-item'+(category===c?' is-selected':'')} onClick={()=>{setCategory(c);document.getElementById('work')?.scrollIntoView({behavior:'smooth'})}} aria-label={`Show ${c} projects`} aria-pressed={category===c}><strong>{String(c==='All work'?projects.length:projects.filter(p=>(p.categories??[p.category]).includes(c)).length).padStart(2,'0')}</strong><span>{c}</span></button>)}</div><p className="proof-overview-note">Projects may appear in more than one engineering discipline.</p></section><section className="work" id="work"><div className="eyebrow">THE WORK</div><h2>Selected proof<em>.</em></h2><p className="hint">Verified implementation details. No invented metrics or unsupported claims.</p><div className="filters">{cats.map(c=><button className={category===c?'active':''} onClick={()=>setCategory(c)} key={c}>{c}</button>)}</div><div className="cards">{shown.map((p,i)=><button className="project" key={p.title} onClick={()=>{setSelected(p);window.scrollTo({top:0,behavior:'smooth'})}}><div className="meta">{String(i+1).padStart(2,'0')} / {p.kind.toUpperCase()} <span>↗</span></div><div className="visual">{p.screenshots?.length>0&&<img className="card-shot" src={p.screenshots[0].src} alt={`${p.title} website screenshot`} loading="lazy"/>}<span>{p.category==='Cloud & DevOps'?'INFRASTRUCTURE / SOURCE':'APPLICATION / SOURCE'}</span>{!p.screenshots?.length&&<div className="bars"><i/><i/><i/></div>}</div><h3>{p.title}</h3><p>{p.summary}</p><div className="tags">{p.stack.split(', ').slice(0,4).map(s=><span key={s}>{s}</span>)}</div><strong>View evidence case study &#8599;</strong></button>)}</div></section></>}</main><footer>© 2026 DANIEL O. ESE <span><a href="mailto:oghenekparobo.ese@gmail.com">Email &#8599;</a> &nbsp; <a href="https://github.com/tracilvrd">GitHub &#8599;</a></span></footer></>}

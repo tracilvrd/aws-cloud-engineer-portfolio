@@ -1,144 +1,37 @@
-# AWS Cloud Engineer Portfolio
+# Engineering Portfolio — Six-section case studies
 
-A production-style cloud-hosted portfolio demonstrating frontend engineering, AWS static hosting, managed hosting with AWS Amplify, and CI/CD automation using GitHub Actions.
+This release preserves the approved V4 visual design and changes the public project detail format to:
 
-This project simulates a real-world deployment pipeline used in modern cloud engineering environments and showcases both manual infrastructure configuration and fully managed cloud deployment services.
+1. Challenge
+2. Intended goal
+3. Architectural design
+4. Implementation
+5. Technologies used
+6. Results & verification
 
-## 🧠 System Overview
+Engineering reflection, limitations and proposed future improvements are intentionally omitted from public case-study sections; reserve them for interviews. Verification language remains careful: source inspection is not equivalent to live-site or test execution. Candidate deployment URLs have been removed from the public UI pending verification.
 
-This portfolio demonstrates two production-ready hosting strategies:
+## Run
 
-1. Manual AWS Deployment
-* React + Vite frontend application
-* Amazon S3 static website hosting
-* GitHub Actions CI/CD pipeline
-* IAM-based secure deployment
-
-2. Managed AWS Deployment
-* AWS Amplify Hosting
-* Automatic HTTPS and CDN
-* Continuous deployment from GitHub
-* Branch-based preview environments
-
-Together, these approaches demonstrate both foundational AWS knowledge and practical use of managed cloud services.
-
-## 🏗️ Architecture
-flowchart LR
-    A[Developer Push] --> B[GitHub Repository]
-
-    B --> C[GitHub Actions CI/CD]
-    C --> D[Build React App (Vite)]
-    D --> E[Generate dist/]
-    E --> F[Deploy to Amazon S3]
-    F --> G[S3 Static Website Hosting]
-
-    B --> H[AWS Amplify]
-    H --> I[Automatic Build & Deploy]
-    I --> J[HTTPS + Global CDN]
-    J --> K[Production Portfolio URL]
-
-
-## 🚀 CI/CD Pipeline (GitHub Actions)
-
-On every push to the main branch, the pipeline:
-
-* Checks out the repository
-* Installs dependencies
-* Builds the production bundle using Vite
-* Syncs the dist/ directory to the S3 bucket
-* Deletes outdated files for deployment consistency
-
-This creates a fully automated, zero-manual deployment workflow.
-
-## ☁️ AWS Infrastructure
-1. Amazon S3
-* Static website hosting enabled
-* index.html as entry point
-* error.html fallback for SPA routing
-* Public read access to website assets
-
-2. IAM
-Deployment credentials are restricted to the minimum required permissions:
-
-* s3:PutObject
-* s3:DeleteObject
-* s3:ListBucket
-
-3. AWS Amplify
-* Connected directly to GitHub
-* Builds and deploys automatically on every push
-* Provides HTTPS and CDN by default
-* Hosts the production portfolio using AWS-managed infrastructure
-
-## 🔄 Deployment Flow
-Git Push
-   ├── GitHub Actions → Build (Vite) → dist/ → Amazon S3 → Static Website
-   └── AWS Amplify → Build & Deploy → HTTPS CDN → Live Portfolio
-
-## 💻 Local Development
-npm install
+```bash
+npm ci
 npm run dev
+```
 
-Application runs locally at:
+To test a production build: `npm run build`.
 
-http://localhost:5173
+## Outstanding work
 
-## 🏗️ Production Build
-npm run build
+Authentic screenshots; live-site verification; deeper security review; production build and test execution. No GitHub repositories were changed.
 
-Build output:
+## V5 screenshot integration
 
-dist/
+Kairos ACE (six captures) and TRACI Gallery (eight captures) are now integrated into their case studies, with a real screenshot on each corresponding project card. Clicking an evidence image opens the original full-page view. All evidence images were sourced from user-provided browser captures and only re-encoded as WebP; no AI-generated mockups were used. The latest corrected checkout and TRACI mobile homepage were selected.
 
+**Remaining:** third-party floating overlays are still visible in some images and require controlled image editing or fresh captures without extensions; live-site testing, security review, and validation of production behavior remain open. Do not describe these as completed.
 
-## 📤 Manual Deployment (Optional)
-aws s3 sync dist s3://YOUR_BUCKET_NAME --delete
+## V6 external project links
 
+Case studies now include new-tab links for Kairos ACE and TRACI Gallery live sites, and public GitHub repositories for AWS Terraform Delivery and Serverless Task API. Private repositories remain unlinked. External links use `target="_blank"` and `rel="noopener noreferrer"`.
 
-## 🔐 GitHub Secrets Required
-Configure the following repository secrets:
-
-* AWS_ACCESS_KEY_ID
-* AWS_SECRET_ACCESS_KEY
-* AWS_REGION
-* S3_BUCKET_NAME
-
-
-## 🌍 Live Deployment
-1. AWS Amplify URL
-https://main.d17g8gq00m7fcs.amplifyapp.com/
-
-2. Amazon S3 Website Endpoint
-http://daniel-ese-cloud-portfolio.s3-website-us-east-1.amazonaws.com/
-
-
-## 🚀 Production Enhancements
-* Amazon CloudFront CDN (manual architecture)
-* Amazon Route 53 custom domain
-* Custom SSL certificates
-* Cache invalidation on deploy
-* Monitoring and logging with Amazon CloudWatch
-
-## 📚 What This Project Demonstrates
-1. Frontend engineering with React and Vite
-2. Amazon S3 static website hosting
-3. CI/CD automation using GitHub Actions
-4. Secure IAM-based deployment workflows
-5. Managed hosting with AWS Amplify
-6. CDN-backed HTTPS delivery
-7. Practical cloud architecture design
-
-
-## 🗂️ Portfolio Project Alignment
-This project serves as the foundation of a larger cloud engineering portfolio:
-
-1. Static Website Hosting with Amazon S3
-2. CI/CD Automation with GitHub Actions
-3. Serverless APIs with AWS Lambda and API Gateway
-4. Infrastructure as Code with Terraform
-5. Managed Hosting with AWS Amplify
-
-
-## 👤 Author
-Ese Daniel
-Cloud Engineer | Frontend Developer | DevOps Enthusiast
+Live-site URLs were sourced from the browser capture domains; full end-to-end site functionality and uptime are not independently certified. The approved six-section layout and screenshot assets are unchanged.
